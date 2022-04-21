@@ -1,0 +1,138 @@
+/* Constantes */
+#violetblack{
+  background-color: #37325b;
+}
+.bgcMain {
+background-color: #663dff;
+background-image: linear-gradient(319deg, #000000 0%, #4e0075 63%, #c35bff 100%);
+background-repeat: round;  
+height: 100%;
+}
+@font-face {
+  font-family: typingmachine;
+  src: url(../assets/JMH\ Typewriter.ttf);
+}
+.gridhorarios{
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+;
+}
+
+/* Efecto Typing Machine */
+
+  .typewriter {
+    --bgColor: #37325b;
+    --lines: 150;
+    --lineHeight: 65px;
+    --timePerLine: 2.5s;
+    --widthCh: 150;
+    --width: calc(var(--widthCh) * ch);
+    border-color: white;
+    border-radius: 12px;
+    border: 3px none white;
+    /* do not touch the time property!!! */
+    --time: calc(var(--lines) * var(--timePerLine));
+    animation: grow var(--time) steps(var(--lines));
+    animation-fill-mode: forwards;
+    background: var(--bgColor);  
+    line-height: var(--lineHeight);
+    max-height: var(--lineHeight);
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+    /* word-break: break-all; */
+  }
+  
+  .typewriter::before {
+    content: "";
+    animation: 
+      type var(--timePerLine) linear , 
+      carriageReturn var(--time) steps(var(--lines)) var(--lines),
+      caret 0.5s steps(2);
+    background: var(--bgColor);
+    border-left: 2px solid;
+    bottom: 0;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    width: 90%;
+  }
+  
+  .typewriter.no-caret::before {
+    border-left-width: 0;
+  }
+  
+  .typewriter.big-caret::before {
+    border-left-width: 1ch;
+  }
+  
+  .typewriter.monospace {
+    font-family: monospace, monospace;
+  }
+  
+  .typewriter.monospace::before {
+    animation: 
+      type var(--timePerLine) steps(var(--widthCh)) infinite, 
+      carriageReturn var(--time) steps(var(--lines)) var(--lines),
+      caret 0.5s steps(2) infinite;
+  }
+
+  @keyframes grow {
+    0% { max-height: var(--lineHeight); }
+    100% { max-height: calc(var(--lineHeight) * var(--lines)); }
+  }
+  
+  @keyframes carriageReturn {
+    0% { top: 0; }
+    100% { top: calc(var(--lineHeight) * var(--lines)); }
+  }
+  
+  @keyframes type {
+    0% { width: 100%; }
+    100% { width: 0%; }
+  }
+  
+  @keyframes caret {
+    0% { color: var(--bgColor); }
+    100% { color: black; }
+  }
+/* ANIMACION Y TRANSICION */
+.transicion {
+  transition: all 1s; }
+
+.slide-bck-center1, .slide-bck-center2, .slide-bck-center3, .slide-bck-center4, .slide-bck-center5, .slide-bck-centerInfo {
+  animation: slide-bck-center 1s cubic-bezier(0.2, 0.13, 0.77, 1.09) both; }
+
+.slide-bck-center2 {
+  animation-duration: 1.5s; }
+
+.slide-bck-center3 {
+  animation-duration: 2s; }
+
+.slide-bck-center4 {
+  animation-duration: 2.5s; }
+
+.slide-bck-center5 {
+  animation-duration: 3s; }
+
+.slide-bck-centerInfo {
+  animation-duration: 0.75s; }
+
+@keyframes slide-bck-center {
+  0% {
+    transform: translateX(-1000px); }
+  100% {
+    transform: translateX(0px); } }
+
+.videosInfo {
+  animation: videosInfo 0.75s cubic-bezier(0.2, 0.13, 0.77, 1.09) both;
+background-color: #37325b;
+border-radius: 10px; 
+border-color: white;}
+
+@keyframes videosInfo {
+  0% {
+    transform: scale(5%); }
+  100% {
+    transform: scale(100%); } }
