@@ -24,42 +24,31 @@ let coins = [
 
 alert("Bienvenido a la calculadora de criptomonedas, los precios son unitarios, estan en dolares y te los muestro a continuación:\nEthereum: 3017$\nBitcoin: 39988$\nDogeCoin: 0.14$\nPoligon: 1.37$\nRiotpoints: 0.00704$")
 
-function calculo(moneda, cantidad){
-    switch(moneda){
-        case "ethereum":
-            return coins[0].precio * cantidad;
-            break;
-        case "bitcoin":
-            return coins[1].precio * cantidad;
-                break;
-        case "dogecoin":
-            return (coins[2].precio * cantidad).toFixed(2);
-                break;
-        case "polygon":
-            return (coins[3].precio * cantidad).toFixed(2);
-                break;
-        case "riotpoints":
-            return (coins[4].precio * cantidad).toFixed(3);
-                break;
-        default:
-            return false;
-            break;
-        }
-    
+function buscarMoneda (nombre) {
+    return coins.find( coin => {
+        return coin.nombre === nombre
+    })
 }
+
+function monedas () {
+    
     let moneda;
     let cantidad;
     let resultado;
+    let coin;
 
-do{
-    moneda = prompt("Ingrese el nombre de la moneda que sea comprar y calcular: ").toLowerCase();
-    cantidad = parseFloat(prompt("Ingrese la cantidad que quiere comprar: "));
-    resultado = calculo(moneda, cantidad);
+    do {
+        moneda = prompt("Ingrese el nombre de la moneda que sea comprar y calcular: ").toLowerCase();
+        cantidad = parseFloat(prompt("Ingrese la cantidad que quiere comprar: "))
+        coin = buscarMoneda(moneda)
+        if (coin && cantidad > 0) {
+            resultado = coin.precio * cantidad;
+            alert('Estas comprando ' + cantidad + ' ' + coin.nombre + ' por: US$ ' + resultado);
 
-    if(!resultado){
-        alert("Valores incorrectos, intente nuevamente");
-    } else{
-        alert("Estas comprando " + cantidad + moneda + " por: " + resultado + "$ Dolares");
-    }
-}while(!resultado);
+        } else {
+            alert('Error en el ingreso de datos.')
+        }
+    } while (!coin || cantidad <= 0);
+}
 
+monedas()
