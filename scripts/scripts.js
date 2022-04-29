@@ -1,24 +1,28 @@
-
 let coins = [
     {
     nombre : "ethereum",
-    precio : 3017
+    precio : 3017,
+    codigo : c-1
 },
 {
     nombre : "bitcoin",
-    precio : 39988
+    precio : 39988,
+    codigo : c-2
 },
 {
     nombre : "dogecoin",
-    precio : 0.14
+    precio : 0.14,
+    codigo : c-3
 },
 {
     nombre : "polygon",
-    precio : 1.37
+    precio : 1.37,
+    codigo : c-4
 },
 {
     nombre : "riotpoints",
-    precio : 0.00704
+    precio : 0.00704,
+    codigo : c-5
 },
 ];
 
@@ -51,4 +55,30 @@ function monedas () {
     } while (!coin || cantidad <= 0);
 }
 
-monedas()
+/* monedas() */
+let icoins = coins.length;
+// Obtengo la lista
+const ul = document.getElementById("coins");
+coins.forEach( (coins, icoins) => {
+
+    // Creo el elemento para la lista
+    const li = document.createElement("li");
+    li.innerText = coins.nombre;
+    // Sublista para valor y el cod de la coin
+    const sublista = document.createElement("ul");
+
+    // LI de la lista
+    const liPrecio = document.createElement("li");
+    liPrecio.innerText = `Precio: ${coins.precio}`;
+    const liCod = document.createElement("li");
+    liCod.innerText = `Codigo: ${coins.codigo}`;
+
+    // Agregamos los LI a la sublista
+    sublista.append(liPrecio);
+    sublista.append(liCod);
+
+    li.append(sublista);
+
+    // Agregamos el li a la lista
+    ul.append(li);
+});
