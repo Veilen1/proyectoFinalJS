@@ -2,27 +2,27 @@ let coins = [
     {
     nombre : "ethereum",
     precio : 3017,
-    codigo : c-1
+    codigo : "c-1"
 },
 {
     nombre : "bitcoin",
     precio : 39988,
-    codigo : c-2
+    codigo : "c-2"
 },
 {
     nombre : "dogecoin",
     precio : 0.14,
-    codigo : c-3
+    codigo : "c-3"
 },
 {
     nombre : "polygon",
     precio : 1.37,
-    codigo : c-4
+    codigo : "c-4"
 },
 {
     nombre : "riotpoints",
     precio : 0.00704,
-    codigo : c-5
+    "codigo" : "c-5"
 },
 ];
 

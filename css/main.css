@@ -24,7 +24,7 @@ height: 100%;
   .typewriter {
     --bgColor: #37325b;
     --lines: 150;
-    --lineHeight: 65px;
+    --lineHeight: 200px;
     --timePerLine: 2.5s;
     --widthCh: 150;
     --width: calc(var(--widthCh) * ch);
