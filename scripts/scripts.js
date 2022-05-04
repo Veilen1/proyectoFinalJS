@@ -54,8 +54,9 @@ function monedas () {
         }
     } while (!coin || cantidad <= 0);
 }
-
 /* monedas() */
+
+
 let icoins = coins.length;
 // Obtengo la lista
 const ul = document.getElementById("coins");
@@ -69,7 +70,7 @@ coins.forEach( (coins, icoins) => {
 
     // LI de la lista
     const liPrecio = document.createElement("li");
-    liPrecio.innerText = `Precio: ${coins.precio}`;
+    liPrecio.innerText = `Precio: ${coins.precio}U$D`;
     const liCod = document.createElement("li");
     liCod.innerText = `Codigo: ${coins.codigo}`;
 
@@ -82,3 +83,23 @@ coins.forEach( (coins, icoins) => {
     // Agregamos el li a la lista
     ul.append(li);
 });
+
+let contenedor = document.getElementById("contenedor")
+function agregarMoneda () {
+    let optionMoneda = document.getElementById("optionMoneda");
+    optionMoneda = document.createElement("option");
+    optionMoneda.innerHTML = "Seleccione una opcion...";
+    contenedor.append(optionMoneda)
+    let inputCantidad = document.getElementById("inputCant");
+    inputCantidad = document.createElement("input");
+    contenedor.append(inputCantidad)
+}
+let botonCalcular = document.getElementById("btnCalculo");
+botonCalcular.addEventListener("click", () => {
+    let p = document.getElementById("p")
+    p = document.createElement("p")
+    p.innerText = "Ingrese que moneda desea tazar y la cantidad.";
+    contenedor.append(p);
+    console.log("toma el evento");
+    agregarMoneda();
+})
