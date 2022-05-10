@@ -115,4 +115,3 @@ botonCalcular.addEventListener("click", () => {
 })
 
 localStorage.setItem("Monedas", JSON.stringify(coins));
-localStorage.removeItem("coins")
