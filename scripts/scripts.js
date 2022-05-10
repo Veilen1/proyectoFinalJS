@@ -86,13 +86,23 @@ coins.forEach( (coins, icoins) => {
 
 let contenedor = document.getElementById("contenedor")
 function agregarMoneda () {
-    let optionMoneda = document.getElementById("optionMoneda");
-    optionMoneda = document.createElement("option");
-    optionMoneda.innerHTML = "Seleccione una opcion...";
-    contenedor.append(optionMoneda)
+    let selectCoins = document.getElementById("selectCoins");
+    selectCoins = document.createElement("select");
+    selectCoins.innerHTML = "Seleccione una opcion...";
+/*     coins.forEach( (coins, icoins) => {
+        const option1 = createElement("option")
+        option1.innerText = coins.nombre
+    }) */
+    contenedor.append(selectCoins)
     let inputCantidad = document.getElementById("inputCant");
     inputCantidad = document.createElement("input");
     contenedor.append(inputCantidad)
+    let botonCalculo = document.getElementById("botonCalculo")
+    botonCalculo.addEventListener("click", () => {
+
+    })
+    botonCalculo = document.createElement("button");
+    contenedor.append(botonCalculo);
 }
 let botonCalcular = document.getElementById("btnCalculo");
 botonCalcular.addEventListener("click", () => {
@@ -103,3 +113,6 @@ botonCalcular.addEventListener("click", () => {
     console.log("toma el evento");
     agregarMoneda();
 })
+
+localStorage.setItem("Monedas", JSON.stringify(coins));
+localStorage.removeItem("coins")
