@@ -42,14 +42,17 @@ for (let moneda of coins) {
 
     const div = document.createElement("div")
 
-    div.innerHTML = ` <div class ="m-4">
-        <img src="${moneda.img}" class ="imgCoins" alt="">
-        <h1>Coin: ${moneda.nombre} </h1>
-        <h2>Price: $ ${moneda.precio}</h2>
-        <label for="cantidad " class ="h5">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
-        <button id="comprar${moneda.id}">Comprar</button>
-        </div>`;
+    div.innerHTML = ` 
+    <div class ="card m-4 cardCoins justify-content-center">
+        <img src="${moneda.img}" class ="card-img-top imgCoins" alt="">
+        <div class ="card-body">
+            <h1>Coin: ${moneda.nombre} </h1>
+            <h2>Price: $ ${moneda.precio}</h2>
+            <label for="cantidad " class ="h5">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
+            <button class="btn btn-primary" id="comprar${moneda.id}">Comprar</button>
+        </div>
+    </div>`;
 
     contenedor.append(div)
 

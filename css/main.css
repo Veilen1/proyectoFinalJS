@@ -141,3 +141,9 @@ border-color: white;}
   width: 175px;
   height: 175px;
 }
+.cardCoins {
+  width: 27rem;
+  background-color:transparent ;
+  border-radius: 10px;
+  border-color: black;
+}
