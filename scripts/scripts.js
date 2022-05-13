@@ -1,117 +1,86 @@
 let coins = [
+        {
+        nombre : "ethereum",
+        precio : 3017,
+        id : 1,
+        img : "https://upload.wikimedia.org/wikipedia/commons/b/b7/ETHEREUM-YOUTUBE-PROFILE-PIC.png",
+    },
     {
-    nombre : "ethereum",
-    precio : 3017,
-    codigo : "c-1"
-},
-{
-    nombre : "bitcoin",
-    precio : 39988,
-    codigo : "c-2"
-},
-{
-    nombre : "dogecoin",
-    precio : 0.14,
-    codigo : "c-3"
-},
-{
-    nombre : "polygon",
-    precio : 1.37,
-    codigo : "c-4"
-},
-{
-    nombre : "riotpoints",
-    precio : 0.00704,
-    "codigo" : "c-5"
-},
+        nombre : "bitcoin",
+        precio : 39988,
+        id : 2,
+        img : "http://pngimg.com/uploads/bitcoin/bitcoin_PNG48.png",
+    },
+    {
+        nombre : "dogecoin",
+        precio : 0.14,
+        id : 3,
+        img : "https://o.remove.bg/downloads/933bed45-23f5-4f80-9910-27c0cc5a5277/kisspng-dogecoin-cryptocurrency-dash-digital-currency-doge-5ad13b0da01474.3329552115236615816557-removebg-preview.png",
+    },
+    {
+        nombre : "polygon",
+        precio : 1.37,
+        id : 4,
+        img : "../assets/polygon.png",
+    },
+    {
+        nombre : "riotpoints",
+        precio : 0.00704,
+        id : 5,
+        img : "https://puntosriot.com/img/riot-point.png",
+    },
 ];
-
-alert("Bienvenido a la calculadora de criptomonedas, los precios son unitarios, estan en dolares y te los muestro a continuación:\nEthereum: 3017$\nBitcoin: 39988$\nDogeCoin: 0.14$\nPoligon: 1.37$\nRiotpoints: 0.00704$")
 
 function buscarMoneda (nombre) {
     return coins.find( coin => {
         return coin.nombre === nombre
     })
 }
+const contenedor = document.getElementById("contenedor");
 
-function monedas () {
-    
-    let moneda;
-    let cantidad;
-    let resultado;
-    let coin;
+for (let moneda of coins) {
 
-    do {
-        moneda = prompt("Ingrese el nombre de la moneda que sea comprar y calcular: ").toLowerCase();
-        cantidad = parseFloat(prompt("Ingrese la cantidad que quiere comprar: "))
-        coin = buscarMoneda(moneda)
-        if (coin && cantidad > 0) {
-            resultado = coin.precio * cantidad;
-            alert('Estas comprando ' + cantidad + ' ' + coin.nombre + ' por: US$ ' + resultado);
+    const div = document.createElement("div")
 
-        } else {
-            alert('Error en el ingreso de datos.')
-        }
-    } while (!coin || cantidad <= 0);
+    div.innerHTML = ` <div class ="m-4">
+        <img src="${moneda.img}" class ="imgCoins" alt="">
+        <h1>Coin: ${moneda.nombre} </h1>
+        <h2>Price: $ ${moneda.precio}</h2>
+        <label for="cantidad " class ="h5">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
+        <button id="comprar${moneda.id}">Comprar</button>
+        </div>`;
+
+    contenedor.append(div)
+
+    const boton = document.getElementById(`comprar${moneda.id}`);
+    const cantidad = document.getElementById(`cantidad${moneda.id}`);
+
+    boton.addEventListener("click", () => comprar(moneda, parseFloat(cantidad.value)));
 }
-/* monedas() */
 
 
-let icoins = coins.length;
-// Obtengo la lista
-const ul = document.getElementById("coins");
-coins.forEach( (coins, icoins) => {
+function comprar(producto, cantidad) {
 
-    // Creo el elemento para la lista
-    const li = document.createElement("li");
-    li.innerText = coins.nombre;
-    // Sublista para valor y el cod de la coin
-    const sublista = document.createElement("ul");
+    const carrito = getCarrito();
+    const productoEnCarrito = carrito.find(item => item.id === producto.id) || false;
 
-    // LI de la lista
-    const liPrecio = document.createElement("li");
-    liPrecio.innerText = `Precio: ${coins.precio}U$D`;
-    const liCod = document.createElement("li");
-    liCod.innerText = `Codigo: ${coins.codigo}`;
-
-    // Agregamos los LI a la sublista
-    sublista.append(liPrecio);
-    sublista.append(liCod);
-
-    li.append(sublista);
-
-    // Agregamos el li a la lista
-    ul.append(li);
-});
-
-let contenedor = document.getElementById("contenedor")
-function agregarMoneda () {
-    let selectCoins = document.getElementById("selectCoins");
-    selectCoins = document.createElement("select");
-    selectCoins.innerHTML = "Seleccione una opcion...";
-/*     coins.forEach( (coins, icoins) => {
-        const option1 = createElement("option")
-        option1.innerText = coins.nombre
-    }) */
-    contenedor.append(selectCoins)
-    let inputCantidad = document.getElementById("inputCant");
-    inputCantidad = document.createElement("input");
-    contenedor.append(inputCantidad)
-    let botonCalculo = document.getElementById("botonCalculo")
-    botonCalculo.addEventListener("click", () => {
-
-    })
-    botonCalculo = document.createElement("button");
-    contenedor.append(botonCalculo);
+    if (productoEnCarrito) {
+        productoEnCarrito.cantidad += parseFloat(cantidad);
+        productoEnCarrito.precioTotal += productoEnCarrito.precio * cantidad;
+    } else {
+        producto.cantidad = parseFloat(cantidad);
+        producto.precioTotal = producto.precio * cantidad;
+        carrito.push(producto);
+    }
+    saveCarrito(carrito)
 }
-let botonCalcular = document.getElementById("btnCalculo");
-botonCalcular.addEventListener("click", () => {
-    let p = document.getElementById("p")
-    p = document.createElement("p")
-    p.innerText = "Ingrese que moneda desea tazar y la cantidad.";
-    contenedor.append(p);
-    console.log("toma el evento");
-    agregarMoneda();
-})
 
-localStorage.setItem("Monedas", JSON.stringify(coins));
+function getCarrito () {
+    return JSON.parse(localStorage.getItem("carrito")) || [];
+}
+
+function saveCarrito (carrito) {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+localStorage.removeItem('randid')

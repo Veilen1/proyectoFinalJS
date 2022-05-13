@@ -136,3 +136,8 @@ border-color: white;}
     transform: scale(5%); }
   100% {
     transform: scale(100%); } }
+
+.imgCoins{
+  width: 175px;
+  height: 175px;
+}
