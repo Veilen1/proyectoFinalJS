@@ -1,3 +1,4 @@
+
 let coins = [
         {
         nombre : "ethereum",
@@ -15,7 +16,7 @@ let coins = [
         nombre : "dogecoin",
         precio : 0.14,
         id : 3,
-        img : "https://o.remove.bg/downloads/933bed45-23f5-4f80-9910-27c0cc5a5277/kisspng-dogecoin-cryptocurrency-dash-digital-currency-doge-5ad13b0da01474.3329552115236615816557-removebg-preview.png",
+        img : "../assets/dogecoin.png",
     },
     {
         nombre : "polygon",
@@ -43,25 +44,49 @@ for (let moneda of coins) {
     const div = document.createElement("div")
 
     div.innerHTML = ` 
-    <div class ="card m-4 cardCoins justify-content-center">
-        <img src="${moneda.img}" class ="card-img-top imgCoins" alt="">
-        <div class ="card-body">
-            <h1>Coin: ${moneda.nombre} </h1>
-            <h2>Price: $ ${moneda.precio}</h2>
-            <label for="cantidad " class ="h5">Cantidad:</label>
-            <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
-            <button class="btn btn-primary" id="comprar${moneda.id}">Comprar</button>
+    <div class ="">
+        <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center">
+            <img src="${moneda.img}" class =" imgCoins" alt="">
+            <div class ="justify-content-center">
+                <h1>Coin: ${moneda.nombre} </h1>
+                <h2>Price: $ ${moneda.precio}</h2>
+                <label for="cantidad " class ="h5">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
+                <button class="btn btn-primary" id="comprar${moneda.id}">Comprar</button>
+            </div>
         </div>
     </div>`;
-
+    
     contenedor.append(div)
 
     const boton = document.getElementById(`comprar${moneda.id}`);
     const cantidad = document.getElementById(`cantidad${moneda.id}`);
 
-    boton.addEventListener("click", () => comprar(moneda, parseFloat(cantidad.value)));
+    /* boton.addEventListener("click", () => comprar(moneda, parseFloat(cantidad.value))); */
+    boton.addEventListener("click", () => Swal.fire({
+        title: `Estas seguro de que queres comprar ${moneda.nombre}`,
+        text: "NO HABRÁ VUELTA ATRÁS",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Comprar ya!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            comprar(moneda, parseFloat(cantidad.value));
+            Swal.fire(
+            'Compra realizada con éxito!!',
+            `Disfrutá de tus ${moneda.nombre}'s`,
+            'success'
+            )
+        } else if(result.isDenied) {
+            Swal.fire(
+                'Compra rechazada',
+            )
+        }
+        }))
+        
 }
-
 
 function comprar(producto, cantidad) {
 
@@ -86,4 +111,8 @@ function getCarrito () {
 function saveCarrito (carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
-localStorage.removeItem('randid')
+let btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
+btnBorrarCarrito.addEventListener("click", () => 
+    console.log("fue borrado"),
+    localStorage.removeItem("carrito")
+);
