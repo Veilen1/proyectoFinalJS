@@ -113,6 +113,15 @@ function saveCarrito (carrito) {
 }
 let btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
 btnBorrarCarrito.addEventListener("click", () => 
+    Swal.fire({
+            title: `Billetera vacía`,
+            text: "que tenga buen dia",
+            icon: 'info',
+    }),
+    localStorage.removeItem("carrito")
+);
+let btnInventario = document.getElementById("btnInventario");
+btnBorrarCarrito.addEventListener("click", () => 
     console.log("fue borrado"),
     localStorage.removeItem("carrito")
 );
