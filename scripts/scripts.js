@@ -1,7 +1,7 @@
 
 let coins = [
         {
-        nombre : "ethereum",
+        nombre : "Ethereum",
         precio : 3017,
         id : 1,
         img : "https://upload.wikimedia.org/wikipedia/commons/b/b7/ETHEREUM-YOUTUBE-PROFILE-PIC.png",
@@ -32,17 +32,11 @@ let coins = [
     },
 ];
 
-function buscarMoneda (nombre) {
-    return coins.find( coin => {
-        return coin.nombre === nombre
-    })
-}
 const contenedor = document.getElementById("contenedor");
 
 for (let moneda of coins) {
 
     const div = document.createElement("div")
-
     div.innerHTML = ` 
     <div class ="">
         <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center">
@@ -62,7 +56,6 @@ for (let moneda of coins) {
     const boton = document.getElementById(`comprar${moneda.id}`);
     const cantidad = document.getElementById(`cantidad${moneda.id}`);
 
-    /* boton.addEventListener("click", () => comprar(moneda, parseFloat(cantidad.value))); */
     boton.addEventListener("click", () => Swal.fire({
         title: `Estas seguro de que queres comprar ${moneda.nombre}`,
         text: "NO HABRÁ VUELTA ATRÁS",
@@ -111,17 +104,42 @@ function getCarrito () {
 function saveCarrito (carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
+
 let btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
 btnBorrarCarrito.addEventListener("click", () => 
-    Swal.fire({
-            title: `Billetera vacía`,
-            text: "que tenga buen dia",
-            icon: 'info',
+Swal.fire({
+    title: `¿Estas seguro de que queres VACIAR tu billetera?`,
+    text: "NO HABRÁ VUELTA ATRÁS",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Eliminar monedas'
+    }).then((result) => {
+    if (result.isConfirmed) {
+        Swal.fire(
+        'Billetera vacía',
+        "que tenga buen dia",
+        'success',
+        ),
+        localStorage.removeItem("carrito")
+    } else if(result.isDenied) {
+        Swal.fire(
+            'Billetera intacta',
+            "que tenga buen dia",
+        )
+    }
     }),
-    localStorage.removeItem("carrito")
 );
 let btnInventario = document.getElementById("btnInventario");
-btnBorrarCarrito.addEventListener("click", () => 
-    console.log("fue borrado"),
-    localStorage.removeItem("carrito")
+btnInventario.addEventListener("click", () => 
+Swal.fire({
+    position: 'top-end',
+    title: "INVENTARIO",
+    text: "Actualmente tenes:",
+    showConfirmButton: false,
+    timer: 1500,
+    })
 );
+
+localStorage.removeItem("randid")
