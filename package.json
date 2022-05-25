@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "coingecko-api": "^1.0.10",
     "sweetalert2": "^11.4.14"
   }
 }

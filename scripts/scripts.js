@@ -31,6 +31,30 @@ let coins = [
         img : "https://puntosriot.com/img/riot-point.png",
     },
 ];
+// INICIALIZAR API COINGECKO CRYPTOS Y IDS
+fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false", ).then((response) =>{
+    return  response.json();
+}).then( (cryptos) => {
+    const {id, abr, name, img, price } = cryptos ;
+    cryptos.forEach(cryptos => {
+        const div = document.createElement("div");
+        div.innerHTML = `<div class ="">
+        <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center">
+            <img src="${cryptos.img}" class =" imgCoins" alt="">
+            <div class ="justify-content-center">
+                <h1>Coin: ${cryptos.id} </h1>
+                <h2>Price: $ ${cryptos.price}</h2>
+                <label for="cantidad " class ="h5">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad${cryptos.id}"/>
+                <button class="btn btn-primary" id="comprar${cryptos.id}">Comprar</button>
+            </div>
+        </div>
+    </div>`
+    });
+    console.log(cryptos);
+});
+
+
 
 const contenedor = document.getElementById("contenedor");
 
