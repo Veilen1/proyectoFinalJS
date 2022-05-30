@@ -1,87 +1,33 @@
-
-let coins = [
-        {
-        nombre : "Ethereum",
-        precio : 3017,
-        id : 1,
-        img : "https://upload.wikimedia.org/wikipedia/commons/b/b7/ETHEREUM-YOUTUBE-PROFILE-PIC.png",
-    },
-    {
-        nombre : "bitcoin",
-        precio : 39988,
-        id : 2,
-        img : "http://pngimg.com/uploads/bitcoin/bitcoin_PNG48.png",
-    },
-    {
-        nombre : "dogecoin",
-        precio : 0.14,
-        id : 3,
-        img : "../assets/dogecoin.png",
-    },
-    {
-        nombre : "polygon",
-        precio : 1.37,
-        id : 4,
-        img : "../assets/polygon.png",
-    },
-    {
-        nombre : "riotpoints",
-        precio : 0.00704,
-        id : 5,
-        img : "https://puntosriot.com/img/riot-point.png",
-    },
-];
 // INICIALIZAR API COINGECKO CRYPTOS Y IDS
+const contenedor = document.getElementById("contenedor")
 fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false", ).then((response) =>{
-    return  response.json();
+    return  response.json(); 
 }).then( (cryptos) => {
-    const {id, abr, name, img, price } = cryptos ;
     cryptos.forEach(cryptos => {
+        console.log(cryptos);
+        let {id, symbol, name, image, current_price, ...rest} = cryptos;
         const div = document.createElement("div");
+        current_price = current_price.toFixed(3);
         div.innerHTML = `<div class ="">
-        <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center">
-            <img src="${cryptos.img}" class =" imgCoins" alt="">
-            <div class ="justify-content-center">
-                <h1>Coin: ${cryptos.id} </h1>
-                <h2>Price: $ ${cryptos.price}</h2>
+        <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center bgcCriptos">
+            <img src="${image}" class ="imgCoins" alt="">
+            <div class ="text-center justify-content-center">
+                <h1>${name} </h1>
+                <h2>Price: $ ${current_price}</h2>
                 <label for="cantidad " class ="h5">Cantidad:</label>
-                <input type="number" name="cantidad" id="cantidad${cryptos.id}"/>
-                <button class="btn btn-primary" id="comprar${cryptos.id}">Comprar</button>
+                <input type="number" name="cantidad" id="cantidad${id}"/>
+                <button class="btn btn-primary" id="comprar${id}">Comprar</button>
             </div>
         </div>
     </div>`
-    });
-    console.log(cryptos);
-});
+    contenedor.append(div);
 
-
-
-const contenedor = document.getElementById("contenedor");
-
-for (let moneda of coins) {
-
-    const div = document.createElement("div")
-    div.innerHTML = ` 
-    <div class ="">
-        <div class ="card m-2 p-3 cardCoins justify-content-center align-items-center">
-            <img src="${moneda.img}" class =" imgCoins" alt="">
-            <div class ="justify-content-center">
-                <h1>Coin: ${moneda.nombre} </h1>
-                <h2>Price: $ ${moneda.precio}</h2>
-                <label for="cantidad " class ="h5">Cantidad:</label>
-                <input type="number" name="cantidad" id="cantidad${moneda.id}"/>
-                <button class="btn btn-primary" id="comprar${moneda.id}">Comprar</button>
-            </div>
-        </div>
-    </div>`;
     
-    contenedor.append(div)
-
-    const boton = document.getElementById(`comprar${moneda.id}`);
-    const cantidad = document.getElementById(`cantidad${moneda.id}`);
+    const boton = document.getElementById(`comprar${id}`);
+    const cantidad = document.getElementById(`cantidad${id}`);
 
     boton.addEventListener("click", () => Swal.fire({
-        title: `Estas seguro de que queres comprar ${moneda.nombre}`,
+        title: `Estas seguro de que queres comprar ${name}`,
         text: "NO HABRÁ VUELTA ATRÁS",
         icon: 'question',
         showCancelButton: true,
@@ -90,10 +36,10 @@ for (let moneda of coins) {
         confirmButtonText: 'Comprar ya!'
         }).then((result) => {
         if (result.isConfirmed) {
-            comprar(moneda, parseFloat(cantidad.value));
+            comprar(cryptos, parseFloat(cantidad.value));
             Swal.fire(
             'Compra realizada con éxito!!',
-            `Disfrutá de tus ${moneda.nombre}'s`,
+            `Disfrutá de tus ${name}'s`,
             'success'
             )
         } else if(result.isDenied) {
@@ -102,9 +48,22 @@ for (let moneda of coins) {
             )
         }
         }))
-        
-}
 
+    });
+    
+
+});
+/* Buscador */
+document.addEventListener("keyup", e=>{
+    if (e.target.matches("#buscador")){
+        if (e.key ==="Escape")e.target.value = "";
+            document.querySelectorAll(".cardCoins").forEach(Coin =>{
+                Coin.textContent.toLowerCase().includes(e.target.value.toLowerCase())
+            ?Coin.classList.remove("filtro")
+            :Coin.classList.add("filtro")
+        })
+    }
+})
 function comprar(producto, cantidad) {
 
     const carrito = getCarrito();
@@ -112,10 +71,10 @@ function comprar(producto, cantidad) {
 
     if (productoEnCarrito) {
         productoEnCarrito.cantidad += parseFloat(cantidad);
-        productoEnCarrito.precioTotal += productoEnCarrito.precio * cantidad;
+        productoEnCarrito.precioTotal += productoEnCarrito.current_price * cantidad;
     } else {
         producto.cantidad = parseFloat(cantidad);
-        producto.precioTotal = producto.precio * cantidad;
+        producto.precioTotal = producto.current_price * cantidad;
         carrito.push(producto);
     }
     saveCarrito(carrito)
@@ -123,10 +82,12 @@ function comprar(producto, cantidad) {
 
 function getCarrito () {
     return JSON.parse(localStorage.getItem("carrito")) || [];
+    
 }
 
 function saveCarrito (carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
+    
 }
 
 let btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
@@ -165,5 +126,5 @@ Swal.fire({
     timer: 1500,
     })
 );
-
+let inventario = JSON.parse(localStorage.getItem("carrito"));
 localStorage.removeItem("randid")

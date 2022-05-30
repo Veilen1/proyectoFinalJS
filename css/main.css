@@ -148,3 +148,16 @@ border-color: white;}
   padding: 5px;
   
 }
+.bgcCriptos{
+  background-color: #663dff;
+  background-image: linear-gradient(319deg, #000000 0%, #4e0075 63%, #c35bff 100%);
+  background-repeat: round;  
+  color: white;
+}
+.filtro{
+  display: none;
+  transition: 0.5s;
+}
+input{
+  height: 30px;
+}
