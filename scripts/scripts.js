@@ -4,7 +4,6 @@ fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
     return  response.json(); 
 }).then( (cryptos) => {
     cryptos.forEach(cryptos => {
-        console.log(cryptos);
         let {id, symbol, name, image, current_price, ...rest} = cryptos;
         const div = document.createElement("div");
         current_price = current_price.toFixed(3);
@@ -51,8 +50,8 @@ fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
 
     });
     
-
 });
+let inventario = JSON.parse(localStorage.getItem("carrito"));
 /* Buscador */
 document.addEventListener("keyup", e=>{
     if (e.target.matches("#buscador")){
@@ -64,11 +63,10 @@ document.addEventListener("keyup", e=>{
         })
     }
 })
-function comprar(producto, cantidad) {
 
+function comprar(producto, cantidad) {
     const carrito = getCarrito();
     const productoEnCarrito = carrito.find(item => item.id === producto.id) || false;
-
     if (productoEnCarrito) {
         productoEnCarrito.cantidad += parseFloat(cantidad);
         productoEnCarrito.precioTotal += productoEnCarrito.current_price * cantidad;
@@ -116,15 +114,23 @@ Swal.fire({
     }
     }),
 );
-let btnInventario = document.getElementById("btnInventario");
+function invSwal() {
+    const inventario = JSON.parse(localStorage.getItem("carrito"));
+    let invSee = 'Tus monedas: ';
+    inventario.forEach( inv => {
+        invSee += ` - Tenés ${inv.cantidad.toFixed(2)} ${inv.name} por un porte total de ${inv.precioTotal}$`;   
+    })
+    return invSee
+};
+
+const btnInventario = document.getElementById("btnInventario");
 btnInventario.addEventListener("click", () => 
 Swal.fire({
     position: 'top-end',
     title: "INVENTARIO",
-    text: "Actualmente tenes:",
+    text: `${invSwal()}`,
     showConfirmButton: false,
-    timer: 1500,
-    })
-);
-let inventario = JSON.parse(localStorage.getItem("carrito"));
+    timer: 3000,
+    }),
+    );
 localStorage.removeItem("randid")
