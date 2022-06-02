@@ -14,7 +14,7 @@ fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
                 <h1>${name} </h1>
                 <h2>Price: $ ${current_price}</h2>
                 <label for="cantidad " class ="h5">Cantidad:</label>
-                <input type="number" name="cantidad" id="cantidad${id}"/>
+                <input type="number" ondrop="return false;" onpaste="return false;" pattern="[0-9]+" name="cantidad" id="cantidad${id}"/>
                 <button class="btn btn-primary" id="comprar${id}">Comprar</button>
             </div>
         </div>
@@ -51,7 +51,7 @@ fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
     });
     
 });
-let inventario = JSON.parse(localStorage.getItem("carrito"));
+
 /* Buscador */
 document.addEventListener("keyup", e=>{
     if (e.target.matches("#buscador")){
