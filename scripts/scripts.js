@@ -14,7 +14,7 @@ fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=mark
                 <h1>${name} </h1>
                 <h2>Price: $ ${current_price}</h2>
                 <label for="cantidad " class ="h5">Cantidad:</label>
-                <input type="number" ondrop="return false;" onpaste="return false;" pattern="[0-9]+" name="cantidad" id="cantidad${id}"/>
+                <input type="number" pattern="[0-9]+" name="cantidad" id="cantidad${id}"/>
                 <button class="btn btn-primary" id="comprar${id}">Comprar</button>
             </div>
         </div>
@@ -87,8 +87,7 @@ function saveCarrito (carrito) {
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
 }
-
-let btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
+const btnBorrarCarrito = document.getElementById("btnBorrarCarrito");
 btnBorrarCarrito.addEventListener("click", () => 
 Swal.fire({
     title: `¿Estas seguro de que queres VACIAR tu billetera?`,
@@ -118,9 +117,10 @@ function invSwal() {
     const inventario = JSON.parse(localStorage.getItem("carrito"));
     let invSee = 'Tus monedas: ';
     inventario.forEach( inv => {
-        invSee += ` - Tenés ${inv.cantidad.toFixed(2)} ${inv.name} por un porte total de ${inv.precioTotal}$`;   
+        invSee += ` - Tenés ${inv.cantidad.toFixed(2)} ${inv.symbol} por un porte total de ${inv.precioTotal}$`;   
     })
     return invSee
+    
 };
 
 const btnInventario = document.getElementById("btnInventario");
@@ -129,8 +129,7 @@ Swal.fire({
     position: 'top-end',
     title: "INVENTARIO",
     text: `${invSwal()}`,
-    showConfirmButton: false,
-    timer: 3000,
+    confirmButtonText:'Cerrar inventario',
     }),
     );
 localStorage.removeItem("randid")
